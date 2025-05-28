@@ -1,0 +1,3 @@
+[submodule "SRE-TASK"]
+	path = SRE-TASK
+	url = git@github.com:PrasadP744/SRE-TASK.git
