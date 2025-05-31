@@ -1,4 +1,17 @@
-# SRE
+# SRE-View the file in RAW mode 
+
+Stacks : 
+## Terraform 
+🔴 Redis
+🔧 Gitea
+📊 Grafana
+📝 Loki
+🌐 Nginx
+📈 Prometheus
+📋 Node Exporter
+📄 Promtail
+
+
 
 .
 └── sso-infrastructure
