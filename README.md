@@ -15,43 +15,56 @@ includes
 
 
 
-
-└── sso-infrastructure
-    ├── authelia
-    │   ├── authelia.log
-    │   ├── config
-    │   │   └── assets
-    │   ├── configuration.yml
-    │   ├── db.sqlite3
-    │   ├── notification.txt
-    │   └── users_database.yml
-    ├── deployment.sh
-    ├── docker-compose.yml
-    ├── generate-passwords.sh
-    ├── grafana
-    │   ├── grafana-emails
-    │   │   ├── alert_notification.txt
-    │   │   ├── new_user_invite.txt
-    │   │   └── welcome_on_signup.txt
-    │   ├── grafana.ini
-    │   └── provisioning
-    │       ├── dashboards
-    │       │   └── dashboards.yml
-    │       └── datasources
-    │           └── datasources.yml
-    ├── loki
-    │   └── loki-config.yml
-    ├── nginx
-    │   ├── conf.d
-    │   │   └── default.conf
-    │   └── nginx.conf
-    ├── prometheus
-    │   └── prometheus.yml
-    ├── promtail
-    │   └── promtail-config.yml
-    └── ssl
-        ├── fullchain.pem
-        └── privkey.pem
+├── README.md
+├── sso-infrastructure
+│   ├── authelia
+│   │   ├── authelia.log
+│   │   ├── config
+│   │   │   └── assets
+│   │   ├── configuration.yml
+│   │   ├── configuration.yml.bkp
+│   │   ├── db.sqlite3
+│   │   ├── notification.txt
+│   │   └── users_database.yml
+│   ├── certs
+│   │   └── ca-certificates.crt
+│   ├── deployment.sh
+│   ├── docker-compose.yml
+│   ├── extras
+│   │   ├── fullchain.pem
+│   │   └── privkey.pem
+│   ├── generate-passwords.sh
+│   ├── grafana
+│   │   ├── grafana-emails
+│   │   │   ├── alert_notification.txt
+│   │   │   ├── new_user_invite.txt
+│   │   │   └── welcome_on_signup.txt
+│   │   ├── grafana.ini
+│   │   └── provisioning
+│   │       ├── dashboards
+│   │       │   └── dashboards.yml
+│   │       └── datasources
+│   │           └── datasources.yml
+│   ├── loki
+│   │   └── loki-config.yml
+│   ├── nginx
+│   │   ├── conf.d
+│   │   │   └── default.conf
+│   │   └── nginx.conf
+│   ├── prometheus
+│   │   └── prometheus.yml
+│   ├── promtail
+│   │   ├── promtail-config.yml
+│   │   └── promtail-config.yml.bkp
+│   └── ssl
+│       ├── cert.conf
+│       ├── fullchain.pem
+│       └── privkey.pem
+└── terraform
+    ├── main.tf
+    ├── outputs.tf
+    ├── provider.tf
+    └── variables.tf
 
 
 
