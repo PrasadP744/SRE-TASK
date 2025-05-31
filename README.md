@@ -2,6 +2,8 @@
 
 Stacks : 
 ## Terraform 
+Docker >>
+includes
 🔴 Redis
 🔧 Gitea
 📊 Grafana
@@ -13,7 +15,7 @@ Stacks :
 
 
 
-.
+
 └── sso-infrastructure
     ├── authelia
     │   ├── authelia.log
