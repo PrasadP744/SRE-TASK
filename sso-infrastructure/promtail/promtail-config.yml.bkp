@@ -1,0 +1,160 @@
+# promtail/promtail-config.yml
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    timeout: 10s
+    backoff_config:
+      min_period: 500ms
+      max_period: 5m
+      max_retries: 10
+
+scrape_configs:
+  # Primary method: Docker API discovery with live log streaming
+  - job_name: docker_containers
+    docker_sd_configs:
+      - host: /var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: status
+            values: ["running"]
+    relabel_configs:
+      # Extract container name without leading slash
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container_name'
+      
+      # Add container ID (short version)
+      - source_labels: ['__meta_docker_container_id']
+        regex: '([a-f0-9]{12}).*'
+        target_label: 'container_id'
+        replacement: '${1}'
+      
+      # Add full container ID if needed
+      - source_labels: ['__meta_docker_container_id']
+        target_label: 'container_id_full'
+      
+      # Add image name
+      - source_labels: ['__meta_docker_container_image']
+        target_label: 'image'
+      
+      # Add compose service name if available
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: 'compose_service'
+      
+      # Add compose project name if available
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
+        target_label: 'compose_project'
+      
+      # Add custom labels if present
+      - source_labels: ['__meta_docker_container_label_app']
+        target_label: 'app'
+      
+      # Add environment label if present
+      - source_labels: ['__meta_docker_container_label_env']
+        target_label: 'environment'
+    
+    pipeline_stages:
+      # Parse Docker logs
+      - docker: {}
+      
+      # Extract timestamp if present in log
+      - timestamp:
+          format: RFC3339Nano
+          source: timestamp
+      
+      # Add all labels to the log stream
+      - labels:
+          container_name:
+          container_id:
+          image:
+          compose_service:
+          compose_project:
+          app:
+          environment:
+      
+      # Optional: Parse JSON logs if your containers output structured logs
+      - match:
+          selector: '{container_name=~".+"}'
+          stages:
+            - json:
+                expressions:
+                  level: level
+                  message: message
+                  timestamp: timestamp
+            - labels:
+                level:
+            - output:
+                source: message
+      
+      # Rate limiting to prevent overwhelming Loki
+      - limit:
+          rate: 1000
+          burst: 2000
+          drop: true
+
+  # Fallback: Direct container log files (for containers not caught by Docker API)
+  - job_name: docker_log_files
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker_files
+          __path__: /var/lib/docker/containers/*/*-json.log
+    
+    pipeline_stages:
+      # Parse Docker JSON log format
+      - json:
+          expressions:
+            output: log
+            stream: stream
+            attrs: attrs
+            timestamp: time
+      
+      # Extract container ID from file path
+      - regex:
+          expression: '/var/lib/docker/containers/(?P<container_id>[a-f0-9]{64})/[a-f0-9]+-json\.log'
+          source: filename
+      
+      # Set timestamp
+      - timestamp:
+          format: RFC3339Nano
+          source: timestamp
+      
+      # Add labels
+      - labels:
+          container_id:
+          stream:
+      
+      # Output the actual log content
+      - output:
+          source: output
+
+  # System logs (optional - for host system logs)
+  - job_name: system_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system
+          __path__: /var/log/{syslog,messages,kern.log,auth.log}
+    
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\w+\s+\d+\s+\d+:\d+:\d+)\s+(?P<hostname>\S+)\s+(?P<service>\S+?)(\[(?P<pid>\d+)\])?\s*:\s*(?P<message>.*)'
+      - labels:
+          hostname:
+          service:
+          pid:
+      - timestamp:
+          format: 'Jan 02 15:04:05'
+          source: timestamp
+      - output:
+          source: message
+
+

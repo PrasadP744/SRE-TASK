@@ -1,0 +1,212 @@
+version: '3.8'
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  gitea_data:
+  grafana_data:
+  prometheus_data:
+  loki_data:
+  authelia_data:
+
+services:
+  
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - authelia
+      - gitea
+      - grafana
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Authelia SSO
+  authelia:
+    image: authelia/authelia:4.39.4
+    container_name: authelia
+    volumes:
+      - ./authelia:/config
+      - authelia_data:/data
+    environment:
+      - AUTHELIA_JWT_SECRET=niRDUM1turj4t0HntBK12avIRf/xpltzvRRH9J8cPGo=
+      - AUTHELIA_SESSION_SECRET=1wQTDZVZgaDpydCNoo4NuIkoS/4IzcfUqmZrT5tgSAw=
+      - AUTHELIA_STORAGE_ENCRYPTION_KEY=b88y9TUIXe5eWrCIkmLzMnKnp34G/yrbvLqZaRVpWUc=
+      - AUTHELIA_TELEMETRY_METRICS_ENABLED=true
+      - AUTHELIA_TELEMETRY_METRICS_ADDRESS=tcp://0.0.0.0:9959
+      - AUTHELIA_SERVER_ENDPOINTS_ENABLE_PPROF=true
+      - AUTHELIA_SERVER_ENDPOINTS_ENABLE_EXPVARS=true 
+    ports:
+      - "9959:9959" 
+    networks:
+      - monitoring
+    restart: unless-stopped
+    depends_on:
+      - redis
+
+  # Redis for Authelia sessions
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Gitea
+  gitea:
+    image: gitea/gitea:1.23.8
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__server__DOMAIN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
+      - GITEA__server__SSH_DOMAIN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
+      - GITEA__server__ROOT_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/gitea/
+      - GITEA__server__SSH_PORT=2222
+      - GITEA__metrics__ENABLED=true
+      # Add OAuth2 configuration
+      - GITEA__oauth2_client__ENABLE_AUTO_REGISTRATION=true
+      - GITEA__oauth2_client__USERNAME=nickname
+      - GITEA__oauth2_client__UPDATE_AVATAR=true
+      - GITEA__oauth2_client__ACCOUNT_LINKING=auto
+         #- GITEA__openid__ENABLE_OPENID_SIGNIN=true
+      - GITEA__oauth2_client__OPENID_CONNECT_SCOPES=openid email profile
+      - GITEA__webhook__SKIP_TLS_VERIFY=true
+      - SSL_VERIFY=false
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+    volumes:
+      - gitea_data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+    ports:
+      - "2222:22"
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:11.4.2
+    container_name: grafana
+    environment:
+      - GF_SMTP_ENABLED=false
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_SERVER_DOMAIN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
+      - GF_SERVER_ROOT_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_GENERIC_OAUTH_ENABLED=true
+      - GF_AUTH_GENERIC_OAUTH_NAME=Authelia
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=grafana
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=XRfmh1rtXoL0fGBdVnRmTjdf6tKAx9oK
+      - GF_AUTH_GENERIC_OAUTH_SCOPES=openid profile email groups
+      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/authelia/api/oidc/authorization
+      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=http://authelia:9091/api/oidc/token
+      - GF_AUTH_GENERIC_OAUTH_API_URL=http://authelia:9091/api/oidc/userinfo
+      - GF_AUTH_GENERIC_OAUTH_REDIRECT_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/grafana/login/generic_oauth
+      - GF_AUTH_GENERIC_OAUTH_USE_PKCE=true
+            
+      - GF_LOG_LEVEL=debug
+      - GF_LOG_FILTERS=oauth.generic_oauth:debug,user.sync:debug,auth:debug
+
+      # These are critical for user sync
+      - GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME=email
+      - GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_NAME=preferred_username
+      - GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_NAME=name
+      - GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH=contains(groups[*], 'admins') && 'Admin' || 'Viewer'
+      #- GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH=contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'editors') && 'Editor' || 'Viewer'
+      - GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP=true
+      - GF_USERS_AUTO_ASSIGN_ORG=true
+      - GF_USERS_AUTO_ASSIGN_ORG_ID=1
+      - GF_USERS_AUTO_ASSIGN_ORG_ROLE=Admin
+      - GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_STRICT=false
+      - GF_AUTH_GENERIC_OAUTH_EMPTY_SCOPES=false
+      - GF_AUTH_GENERIC_OAUTH_ID_TOKEN_ATTRIBUTE_NAME=sub
+      - GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH=groups
+      - GF_AUTH_OAUTH_ALLOW_INSECURE_EMAIL_LOOKUP=true 
+           
+      # Static file serving
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/grafana-emails:/usr/share/grafana/emails
+          #- ./grafana/grafana.ini:/etc/grafana/grafana.ini  # if using custom config file
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Loki for log aggregation
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki_data:/loki
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Promtail for log collection
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./promtail/promtail-config.yml:/etc/promtail/config.yml
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Node Exporter for system metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - monitoring
+    restart: unless-stopped

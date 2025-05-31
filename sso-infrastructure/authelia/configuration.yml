@@ -1,0 +1,189 @@
+theme: dark
+
+identity_validation:
+  reset_password:
+    jwt_secret: 'aIfKpFg111t4unBm5HBxOzCuw9d8qdxM6Gd4wWajzV09FUlbFA6kjQ2UCW4gInnaO990WGjWDWo8GkV3sgQ'
+
+server:
+  address: 'tcp://0.0.0.0:9091/authelia'
+  # Remove asset_path or create the directory
+  #asset_path: /config/assets/
+  endpoints:
+    enable_pprof: false
+    enable_expvars: false
+  disable_healthcheck: false
+
+log:
+  level: debug
+  format: text
+  file_path: /config/authelia.log
+  keep_stdout: true
+
+totp:
+  disable: false
+  issuer: authelia.com
+  algorithm: sha1
+  digits: 6
+  period: 30
+  skew: 1
+  secret_size: 32
+
+webauthn:
+  disable: false
+  timeout: 60s
+  display_name: Authelia
+  attestation_conveyance_preference: indirect
+  user_verification: preferred
+
+ntp:
+  address: "time.cloudflare.com:123"
+  version: 3
+  max_desync: 3s
+  disable_startup_check: false
+  disable_failure: false
+
+authentication_backend:
+  password_reset:
+    disable: false
+  refresh_interval: 5m
+  file:
+    path: /config/users_database.yml
+    password:
+      algorithm: argon2
+      argon2:
+        variant: argon2id
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+
+access_control:
+  default_policy: one_factor
+  rules:
+    - domain: "ec2-3-108-55-55.ap-south-1.compute.amazonaws.com"
+      policy: bypass
+      resources:
+        - "^/authelia/?.*"
+    - domain: "ec2-3-108-55-55.ap-south-1.compute.amazonaws.com"
+      policy: one_factor
+      subject: ["group:admins", "user:admin"]
+
+session:
+  name: authelia_session
+  secret: 'dHHwosVfc3yMGAk8Pff8mvewcT3XSKLYKrkqMWdO23Nc32UNp2v4NwoOG75ukeJgSkGSEAXQMMdbeBydgQ'
+  expiration: 3600
+  inactivity: 300
+  remember_me: 1M
+  cookies:
+    - domain: 'ec2-3-108-55-55.ap-south-1.compute.amazonaws.com'
+      authelia_url: 'https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/authelia'
+      default_redirection_url: 'https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com'
+      name: 'authelia_session'
+      same_site: 'lax'
+      inactivity: '5m'
+      expiration: '1h'
+      remember_me: '1M'
+  redis:
+    host: redis
+    port: 6379
+    username: ""
+    password: ""
+    database_index: 0
+    maximum_active_connections: 8
+    minimum_idle_connections: 0
+
+regulation:
+  max_retries: 3
+  find_time: 2m
+  ban_time: 5m
+
+storage:
+  encryption_key: 'w7CpXUPmHOU30ViSLt04KDYPjCZOA1SKegCQTBN4zRkb83fxFqTmZOBS93UZPAAGeoTb5OBSnkSUR5wqMbQ'
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  disable_startup_check: false
+  filesystem:
+    filename: /config/notification.txt
+
+identity_providers:
+  oidc:
+    hmac_secret: 'Ycv5skXewvWFK2zKgOv7EdYc7HiIyIpGpGAKtpVtWAptCjhYHscNF3W9mAYPSNlsit72NPuwT4hZBzbKdA'
+    jwks:
+      - key: |
+          -----BEGIN RSA PRIVATE KEY-----
+          MIIEpAIBAAKCAQEA9UYem2I1N7EoFjVx/P4WNxACyK8486+AZus/IiOfJipehapF7MirmA257N65NxcBqzRhXYjj4gcvpji3zfHUeIdXoHayOHi9DY3r/jgD+DXD83gGKAXu18uGJpDTy6r58e85RIoS+aLdEax4/ccKrzvq8uwZ90tkOnGIAVlWaJrmYYMYUzkDmtVNFVkq/CSSyMv47si+5loLF0JIQPSf0frpjUa83Ug4vJB5AvUdZMsvj+pK1aBZSysMA6GU9WuxBSQa65RwGgi0MUthaVaMlNjE8iygJGNxHLRW6D7RhhRzyKk4yOmlWJ67wwsP1oRLiKjYl8h2/losge0jhCCkLwIDAQABAoIBAHguE3EvfcP8GhhHt8Ku/VOdlL+gm9dLdy72tciUi7a3q/jypbCP4wRuNVvLBhXoP/kTgWHDYWWu/7oCsI1IoUMtjdIiVtE01+18TNYTvF4yegEiHmIeBhnWr7TV4fE5pZ7WCMl8ni+TjZ7LU72FecbDJSxCY7a4SjQYzPtcOuqlhgxGTTWjdMMp6orJeJP5ln0s68FGB+pwLErpK+RzxSfGCkxXXcRMkZvIc+Xemzqgeyg7iFPeLRZK2zc+weOrHVNnurQP5bxCe7KjeFyX6EZ9G1Jw7/7MEOGXtJF/oWgdeBUqhxYuffkE0cKJ/Y1QFZhXOQPj61hhlMJ46CstSQECgYEA+4mlVlwE0k/GfSC4LKnCQfIBXuw0wDsnEAZAk+gAyJxApwGghpXdG/ERH+Y2vbQtXn3iiKcxaq1iWkyw9IBs5rNlmXai/dSYw8hS9X1lUgzKLDGOlfpqBfYOGCopcic31368yJxSBDTIuQaUq9wVrd9dKwMXDWY59NjWzbCY1OkCgYEA+aAG4cJDiypqKLIDkMYOz/S9Q8xahb6F1j4d95ZO9wGYsmQYKhGCJw9nPjY8AVqt+EmXH897TBPV0fgKUd1bpDFOJWWNXcQITVsS3XGdxRFDAbuLhmc7PR9wHP64PDtIhOzqjgQdBHG/uv4PEkkmx6/TgwRTqq0Rsvj0UjjkYVcCgYEA+EtjPeAPklrVH+cQZmYcL2RoHf8kAy1g3dyOGnJFc8FpwHFGuBNu84n+0XI6TwBwWHoDB8miah9EmsZhVrj+xqwHenk1Y0JcmcZAvbtOLLQbTYyNp1ZNGh1MxGW6C8jSwpGEYLKN80D3ck0grJTPgZafLTobo0ppo1v4jYnpEyECgYEA2PqWwMnheCgoGrORkdf2rCBqG3KYBMU1BKL93WYTwXTry7RhpL+PSHCFJ3hw9CRkL/uXlxj8bYaYR2i5X6tvqusIqEz7clOhe8v8O+w0XUXB3tGsV+mHfnvDMhDfB8voH1LoFwXQSzqsk9eeNiDLyqs0yR+LskG5rr3jcUzuhwUCgYBEu82j3kb7mPj14C6T73RI7bBUDdl5UUcIlMGi8tqXfZ/sGLqxf2iBFdf0Vees0tf7bycRA42hZK5wxSdmeSPxpgeez03iVbehplVKD4m32duYgXy9D3Br7/1KQ/zEuM7Rj4VgobBSK6DkAEGZFEXRyxidFXGPYDLcZCIIeNI/9A==
+          -----END RSA PRIVATE KEY-----
+    lifespans:
+      access_token: 1h
+      authorize_code: 1m
+      id_token: 1h
+      refresh_token: 90m
+    enable_client_debug_messages: false
+    minimum_parameter_entropy: 8
+    enforce_pkce: public_clients_only
+    enable_pkce_plain_challenge: false
+    cors:
+      endpoints:
+        - authorization
+        - token
+        - revocation
+        - introspection
+      allowed_origins:
+        - https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
+      allowed_origins_from_client_redirect_uris: false
+    clients:
+      - client_id: 'gitea'
+        client_name: 'Gitea'
+        client_secret: '$pbkdf2-sha512$310000$aPGYFbbsqEXnBMe0wt0ZIQ$09QyEwDbnhteZVVTUJSP0Xt0hX94P3CdoXtljhxxc5v3hO3l0kq1rZ6f5Ld81FpyD0a1xgXuK5wHn.1x5tDCig'
+        public: false
+        authorization_policy: 'one_factor'
+        require_pkce: true #false 
+        pkce_challenge_method: 'S256' #plain
+        redirect_uris:
+          - 'https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/gitea/user/oauth2/authelia/callback'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'groups'
+          - 'email'
+        userinfo_signing_algorithm: none
+        response_types:
+          - 'code'
+        grant_types:
+          - 'authorization_code'
+        response_modes:
+          - 'form_post'
+          - 'query'
+          - 'fragment'
+        token_endpoint_auth_method: 'client_secret_basic'
+
+      - client_id: 'grafana'
+        client_name: 'Grafana'
+        # Generate hashed secret with: authelia crypto hash generate pbkdf2 --password 'XRfmh1rtXoL0fGBdVnRmTjdf6tKAx9oK'
+        client_secret: '$pbkdf2-sha512$310000$VcdAsWHsYyqcnBGki7iFsg$bVh.fWOkQRyS2TPLRmgV/hhp62lMBxcC546lb9P5R9zuGbBjnx3oUW0CO9USKgzES0nyVI5YPiJ5AZGVCwX2wg'
+        public: false
+        authorization_policy: 'one_factor'
+        require_pkce: true
+        pkce_challenge_method: 'S256'
+        redirect_uris:
+          - 'https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/grafana/login/generic_oauth'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'groups'
+          - 'email'
+        userinfo_signing_algorithm: none
+
+        response_types:
+          - 'code'
+        grant_types:
+          - 'authorization_code'
+        response_modes:
+          - 'form_post'
+          - 'query'
+          - 'fragment'
+        userinfo_signed_response_alg: 'none'
+        token_endpoint_auth_method: 'client_secret_basic'
