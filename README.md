@@ -50,6 +50,7 @@ BreakDown
 
 Prerequisites if you want clone this setup 
 Terraform for provisioning -optional 
+self signed certificate
 An AWS Account (here I have Used AWS Public DNS >>Worked great in my case) You can use Cloudflare ,or any DNS provider who has Authentic signed CA 
 t2.micro  a 2GB ram server with 4vCPU  you can use any Linux based distro  RHEL,Cent os ,Amazon AMI 2  
 
@@ -74,6 +75,7 @@ CA signed certificates from cloudflare or AWS
 a  secreat vault to store the secrets 
 docker-compose needs minor tweaks and improvements 
 tokens and secrets should be shipped to safe store or vault
+
  
 
 
