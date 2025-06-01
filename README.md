@@ -14,7 +14,10 @@ includes
 📋 Node Exporter
 📄 Promtail
 
+
+
 THIS WAS FUN :))
+##changing the image version and  other configurations may brake the OIDC auth and also the cluster uptime.##
 
 This Repo 
 Adds Terraform with  ec2 provision and docker installation  &&
@@ -43,8 +46,14 @@ t2.micro  a 2GB ram server with 4vCPU  you can use any Linux based distro  RHEL,
 
 
 THIS IS 75% Production ready setup. 
-tweaks or mods needed.due to time constraints 
-docker compose secrets hardening. 
+tweaks or mods needed.
+docker compose secrets hardening.
+due to time constraints i have not hardened the secrets and some issues cam ewhile masking the secrets which is in docker-compose file.
+Gitea currently doesnot support the PKCE secret sharing method hence it is disabled. may be it will be added in the future.
+
+
+ 
+ 
 
  
 
