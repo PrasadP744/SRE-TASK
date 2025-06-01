@@ -20,7 +20,7 @@ Component Overview:
 **NODE EXPORTER IS OPTIONAL*
 
 
-##changing the image version and  other configurations may brake the OIDC auth and also the cluster uptime.##
+                ##changing the image version and  other configurations which is not inteded to change may brake the OIDC auth and  result in  the cluster and container failure.##
 
 This Repo                                            
 Adds Terraform with  ec2 provision and docker installation  &&
