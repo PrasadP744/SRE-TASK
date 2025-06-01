@@ -116,6 +116,50 @@ Feel free to use this as a foundation for your own infrastructure projects!
 🔐 Authelia: https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/authelia/  
 ```
 
+
+## Infrastructure Setup Screenshots
+
+### Docker Containers
+![Docker Containers](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/DOCKER%20containers.png)
+
+### Terraform Infrastructure
+![Terraform Infrastructure](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/Terraform-infra.png)
+
+## Authentication & SSO Setup
+
+### SSO Homepage
+![SSO Homepage](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/SSO%20HOMEPAGE.png)
+
+### Authelia Dashboard
+![Authelia Dashboard](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/authelia%20dashboard.png)
+
+### Authentication Setup Readiness
+![Auth Setup Readiness](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/auth%20setup%20readyness.png)
+
+### Configuration Preview
+![Preview Configuration Default](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/Preview%20conf%20default%20.png)
+
+## Gitea Git Server
+
+### Gitea Instance
+![Gitea Instance](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/gitea%20instance.png)
+
+### Gitea Web UI
+![Gitea Web UI](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/gitea%20WEBUI.png)
+
+### Gitea Dashboard
+![Gitea Dashboard](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/gitea%20dashboard.png)
+
+### Gitea SSO Integration
+![Gitea SSO](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/gitea%20SSO.png)
+
+## Monitoring & Observability
+
+### Grafana SSO
+![Grafana SSO](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/GRAFANA%20SSO.png)
+
+### Grafana Sign-in Authentication
+![Grafana Sign-in Auth](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/grafana%20sign%20in%20auth%20.png)
  
 
 
