@@ -31,7 +31,7 @@ This setup provides a solid foundation for production use but requires additiona
 
 ### 🏗️ **Infrastructure Management**
 - **Terraform State Backend**: Currently uses local state file for demonstration purposes
-  - **Required for Production**: Configure remote backend (S3, Azure Storage, GCS, etc.)
+  - **Required for Production**: Configure remote backend (S3)
   - **Recommendation**: Use state locking with DynamoDB (AWS) or equivalent
   - **Security**: Enable state file encryption
 
@@ -42,7 +42,7 @@ This setup provides a solid foundation for production use but requires additiona
   - **Implementation**: Use `docker secret create` and reference in compose files
 
 ### 🔑 **Configuration Security**
-- **Exposed Secrets**: All configuration hashes and secrets are visible for educational purposes
+- **Exposed Secrets**: All configuration hashes and secrets are visible for educational purposes and better understanding and cloning this setup 
   - **Required for Production**: 
     - Regenerate all passwords, API keys, and secret hashes
     - Use environment variables or secret management systems
@@ -50,12 +50,9 @@ This setup provides a solid foundation for production use but requires additiona
     - Enable audit logging for secret access
 
 ### 🛡️ **Additional Production Considerations**
-- **SSL Certificates**: Implement proper certificate management (Let's Encrypt, internal CA)
+- **SSL Certificates**: Implement proper certificate management (Let's Encrypt, Cloudflare, AWS )
 - **Backup Strategy**: Configure automated backups for databases and repositories
-- **Monitoring & Alerting**: Set up proper alerting rules in Grafana/Prometheus
-- **Network Security**: Implement proper firewall rules and network segmentation
-- **High Availability**: Consider multi-node deployment for critical services
-- **Resource Limits**: Configure proper CPU/memory limits for all containers
+- **
 
 ## 🔧 **Known Limitations**
 
@@ -71,7 +68,7 @@ clients:
 
 **Impact**: Slightly reduced security for the OAuth2 flow between Gitea and Authelia.
 
-**Status**: This is a known limitation in Gitea's OAuth2 client implementation.
+**Status**: This is a known limitation in Gitea's OAuth2 client implementation as per official documentation.
 
 **Future**: PKCE support may be added in future Gitea releases. Monitor [Gitea GitHub Issues](https://github.com/go-gitea/gitea/issues) for updates.
 
@@ -83,8 +80,8 @@ clients:
 1. Generate new secrets and configuration hashes
 2. Implement proper secret management
 3. Follow security best practices outlined above
-4. Conduct security testing and penetration testing
-5. Implement monitoring and incident response procedures
+4. Conduct security testing and penetration testing 
+5. Implement monitoring  with alert rules 
 
 ## 🎉 **Final Note**
 
@@ -93,10 +90,11 @@ clients:
 This project demonstrates a comprehensive infrastructure setup with modern DevOps practices including:
 - Infrastructure as Code (Terraform)
 - Containerized Services (Docker Compose)
-- Single Sign-On (Authelia)
-- Observability Stack (Prometheus, Grafana, Loki)
+- Single Sign-On (Authelia) OIDC Integration for maximize security with PKCE S256 encryption//one-factor --this is a simple yet robust SSO auth setup for beginning. PKCE is known to prevent authorization infiltration and middle attacks for authentication methods 
+- Self-hosted Git repositary (Gitea)
+- Observability Stack (Prometheus, Grafana, Loki,Promatail)
 - Reverse Proxy (NGINX)
-- Session Management (Redis)
+- Fast Session Management (Redis)
 
 Feel free to use this as a foundation for your own infrastructure projects!
 
