@@ -15,7 +15,7 @@ Component Overview:
 8. **Prometheus* - Metrics collection and storage
 9. **Promtail* - Log collection agent
 10. **Loki* - Log aggregation and storage
-—
+—-
 
 **NODE EXPORTER IS OPTIONAL*
 
