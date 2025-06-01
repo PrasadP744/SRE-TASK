@@ -32,7 +32,7 @@ if [ ! -f ./ssl/server.crt ]; then
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -keyout ./ssl/server.key \
         -out ./ssl/server.crt \
-        -subj "/C=IN/ST=<your state here>/L=<yourlocation here>/O=SRE/CN=ec2-52.66.251.211.ap-south-1.compute.amazonaws.com"
+        -subj "/C=IN/ST=<your state here>/L=<yourlocation here>/O=SRE/CN=ec2-52-66-251-211.ap-south-1.compute.amazonaws.com"
 fi
 
 # Check if Docker and Docker Compose are installed
