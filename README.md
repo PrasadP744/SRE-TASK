@@ -118,7 +118,7 @@ Feel free to use this as a foundation for your own infrastructure projects!
 
 
 ## Infrastructure Setup Screenshots
-
+![Infrastructure](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/Infrastructure.png)
 ### Docker Containers
 ![Docker Containers](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/DOCKER%20containers.png)
 
