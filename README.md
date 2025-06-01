@@ -33,17 +33,7 @@ t2.micro  a 2GB ram server with 4vCPU  you can use any Linux based distro  RHEL,
 
 PDF is attached for further instructions and configuration info.
 
-| Service | Image | Version | Purpose |
-|---------|-------|---------|---------|--------|
-| **Authelia** | authelia/authelia:4.39.4 | 4.39.4 | Authentication & Authorization | 
-| **Gitea** | gitea/gitea:1.23.8 | 1.23.8 | Git Repository Management | 
-| **Grafana** | grafana/grafana:11.4.2 | 11.4.2 | Monitoring & Dashboards | 
-| **Loki** | grafana/loki:latest | Latest | Log Aggregation |
-| **Nginx** | nginx:alpine | Alpine | Reverse Proxy | 
-| **Prometheus** | prom/prometheus:latest | Latest | Metrics Collection | 
-| **Node Exporter** | prom/node-exporter:latest | Latest | System Metrics | 
-| **Promtail** | grafana/promtail:latest | Latest | Log Shipping | 
-| **Redis** | redis:alpine | Alpine | Session Storage | 
+| 
 
 
 THIS IS 75% Production ready setup. 
