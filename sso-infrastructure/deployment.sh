@@ -65,10 +65,10 @@ docker-compose ps
 
 # Show service URLs
 echo "🌐 Services are available at:"
-echo "  - Authelia (SSO): http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/authelia/"
-echo "  - Gitea: http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/gitea/"
-echo "  - Grafana: http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/grafana/"
-echo "  - Prometheus: http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/prometheus/"
+echo "  - Authelia (SSO): http://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/authelia/"
+echo "  - Gitea: http://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/gitea/"
+echo "  - Grafana: http://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/grafana/"
+echo "  - Prometheus: http://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/prometheus/"
 
 echo ""
 echo "🔑 Default credentials:"
