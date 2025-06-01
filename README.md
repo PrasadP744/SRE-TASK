@@ -1,22 +1,24 @@
+# SRE-View the file in RAW mode 
+
+
+![Screenshot 2025-05-31 211233](https://github.com/user-attachments/assets/f4d7651b-caeb-4754-9be3-f3cb6cd0b74d)
 
 
 
 
-
-![Screenshot 2025-05-30 003645](https://github.com/user-attachments/assets/a3611fe0-d4cf-4048-98cb-70b254eaa274)
-
+![Screenshot 2025-05-31 172149](https://github.com/user-attachments/assets/22eb8dc5-6ee1-42e9-8918-32aea6551a5c)
 
 
 
+![Screenshot 2025-05-31 160158](https://github.com/user-attachments/assets/183250d3-3a12-4203-961b-24f88e375cf6)
+
+![Screenshot 2025-05-31 160158](https://github.com/user-attachments/assets/21f422a6-ccf5-47bc-867f-2e9a54ffb0b0)
+
+![Screenshot 2025-05-31 160225](https://github.com/user-attachments/assets/bcc5458e-b889-4afb-9b53-05d13c20f444)
 
 
 
-
-
-
-
-
-
+![Screenshot 2025-05-31 153632](https://github.com/user-attachments/assets/c1423e40-bcf8-4591-91dc-6b174fec682e)
 
 # SRE-View the file in RAW mode 
 
