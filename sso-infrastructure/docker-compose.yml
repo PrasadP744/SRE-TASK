@@ -71,9 +71,9 @@ services:
       - USER_UID=1000
       - USER_GID=1000
       - GITEA__database__DB_TYPE=sqlite3
-      - GITEA__server__DOMAIN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
-      - GITEA__server__SSH_DOMAIN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
-      - GITEA__server__ROOT_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/gitea/
+      - GITEA__server__DOMAIN=ec2-52.66.251.211.ap-south-1.compute.amazonaws.com
+      - GITEA__server__SSH_DOMAIN=ec2-52.66.251.211.ap-south-1.compute.amazonaws.com
+      - GITEA__server__ROOT_URL=https://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/gitea/
       - GITEA__server__SSH_PORT=2222
       - GITEA__metrics__ENABLED=true
       # Add OAuth2 configuration
@@ -104,8 +104,8 @@ services:
     environment:
       - GF_SMTP_ENABLED=false
       - GF_SECURITY_ADMIN_PASSWORD=admin123
-      - GF_SERVER_DOMAIN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com
-      - GF_SERVER_ROOT_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/grafana/
+      - GF_SERVER_DOMAIN=ec2-52.66.251.211.ap-south-1.compute.amazonaws.com
+      - GF_SERVER_ROOT_URL=https://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - GF_AUTH_DISABLE_LOGIN_FORM=true
       - GF_AUTH_GENERIC_OAUTH_ENABLED=true
@@ -113,10 +113,10 @@ services:
       - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=grafana
       - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=XRfmh1rtXoL0fGBdVnRmTjdf6tKAx9oK
       - GF_AUTH_GENERIC_OAUTH_SCOPES=openid profile email groups
-      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/authelia/api/oidc/authorization
+      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=https://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/authelia/api/oidc/authorization
       - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=http://authelia:9091/api/oidc/token
       - GF_AUTH_GENERIC_OAUTH_API_URL=http://authelia:9091/api/oidc/userinfo
-      - GF_AUTH_GENERIC_OAUTH_REDIRECT_URL=https://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/grafana/login/generic_oauth
+      - GF_AUTH_GENERIC_OAUTH_REDIRECT_URL=https://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/grafana/login/generic_oauth
       - GF_AUTH_GENERIC_OAUTH_USE_PKCE=true
             
       - GF_LOG_LEVEL=debug
