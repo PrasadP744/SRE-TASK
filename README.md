@@ -37,9 +37,10 @@ PDF is attached for further instructions and configuration info.
 
 
 THIS IS 75% Production ready setup. 
-tweaks or mods needed.
-docker compose secrets hardening.
-due to time constraints i have not hardened the secrets and some issues came while masking the secrets which is in docker-compose file.
+tweaks or mods needed>>>
+Terraform state file is not saved in any backend here . made it for one time use only .(for production)
+docker compose secrets hardening. (for production)
+for the  better understanding to the viewer or to clone this setup I did not masked any secrets or 
 Gitea currently does not support the PKCE secret sharing method hence it is disabled. may be it will be added in the future.
 
 
