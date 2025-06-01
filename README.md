@@ -50,7 +50,7 @@ This setup provides a solid foundation for production use but requires additiona
     - Enable audit logging for secret access
 
 ### 🛡️ **Additional Production Considerations**
-- **SSL Certificates**: Implement proper certificate management (Let's Encrypt, Cloudflare, AWS )
+- **SSL Certificates**: Implement proper certificate management SAN Standard (Let's Encrypt, Cloudflare, AWS )
 - **Backup Strategy**: Configure automated backups for databases and repositories
 - **
 
