@@ -108,7 +108,13 @@ Feel free to use this as a foundation for your own infrastructure projects!
 
 **Happy DevOps! 🚀**
  
- ---
+ --- 
+### 7. Access URLS will be kept for 4 to 5 days 
+```bash
+🌐 Gitea: https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/gitea
+📊 Grafana: https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/grafana
+🔐 Authelia: https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/authelia/
+```
 
  
 
