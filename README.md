@@ -1,8 +1,3 @@
-# SRE-View the file in RAW mode 
-
-
-
-
 
 # SRE-View the file in RAW mode 
 
@@ -18,61 +13,6 @@ includes
 📈 Prometheus
 📋 Node Exporter
 📄 Promtail
-
-
-
-├── README.md
-├── sso-infrastructure
-│   ├── authelia
-│   │   ├── authelia.log
-│   │   ├── config
-│   │   │   └── assets
-│   │   ├── configuration.yml
-│   │   ├── configuration.yml.bkp
-│   │   ├── db.sqlite3
-│   │   ├── notification.txt
-│   │   └── users_database.yml
-│   ├── certs
-│   │   └── ca-certificates.crt
-│   ├── deployment.sh
-│   ├── docker-compose.yml
-│   ├── extras
-│   │   ├── fullchain.pem
-│   │   └── privkey.pem
-│   ├── generate-passwords.sh
-│   ├── grafana
-│   │   ├── grafana-emails
-│   │   │   ├── alert_notification.txt
-│   │   │   ├── new_user_invite.txt
-│   │   │   └── welcome_on_signup.txt
-│   │   ├── grafana.ini
-│   │   └── provisioning
-│   │       ├── dashboards
-│   │       │   └── dashboards.yml
-│   │       └── datasources
-│   │           └── datasources.yml
-│   ├── loki
-│   │   └── loki-config.yml
-│   ├── nginx
-│   │   ├── conf.d
-│   │   │   └── default.conf
-│   │   └── nginx.conf
-│   ├── prometheus
-│   │   └── prometheus.yml
-│   ├── promtail
-│   │   ├── promtail-config.yml
-│   │   └── promtail-config.yml.bkp
-│   └── ssl
-│       ├── cert.conf
-│       ├── fullchain.pem
-│       └── privkey.pem
-└── terraform
-    ├── main.tf
-    ├── outputs.tf
-    ├── provider.tf
-    └── variables.tf
-
-
 
 THIS WAS FUN :))
 
@@ -103,12 +43,8 @@ t2.micro  a 2GB ram server with 4vCPU  you can use any Linux based distro  RHEL,
 
 
 THIS IS 75% Production ready setup. 
-tweaks or mods needed 
-
-CA signed certificates from cloudflare or AWS 
-a  secreat vault to store the secrets 
-docker-compose needs minor tweaks and improvements 
-tokens and secrets should be shipped to safe store or vault
+tweaks or mods needed.due to time constraints 
+docker compose secrets hardening. 
 
  
 
