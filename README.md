@@ -4,18 +4,19 @@
  ## Stacks :
 
 Component Overview:
----
-1.**Terraform* - Infrastructure provisioning
-2.**Docker* - Containerisation
-3.**NGINX Reverse Proxy* - Entry point for all external traffic
-4.**Authelia SSO* - Centralized authentication and authorization
-5.**Redis* - Session storage for Authelia
-6.**Gitea* - Git repository management
-7.**Grafana* - Data visualization and dashboards
-8.**Prometheus* - Metrics collection and storage
-9.**Promtail* - Log collection agent
-10.**Loki* - Log aggregation and storage
----
+—
+1. **Terraform* - Infrastructure provisioning
+2. **Docker* - Containerisation
+3. **NGINX Reverse Proxy* - Entry point for all external traffic
+4. **Authelia SSO* - Centralized authentication and authorization
+5. **Redis* - Session storage for Authelia
+6. **Gitea* - Git repository management
+7. **Grafana* - Data visualization and dashboards
+8. **Prometheus* - Metrics collection and storage
+9. **Promtail* - Log collection agent
+10. **Loki* - Log aggregation and storage
+—
+
 **NODE EXPORTER IS OPTIONAL*
 
 
