@@ -140,10 +140,10 @@ identity_providers:
         client_secret: '$pbkdf2-sha512$310000$aPGYFbbsqEXnBMe0wt0ZIQ$09QyEwDbnhteZVVTUJSP0Xt0hX94P3CdoXtljhxxc5v3hO3l0kq1rZ6f5Ld81FpyD0a1xgXuK5wHn.1x5tDCig'
         public: false
         authorization_policy: 'one_factor'
-        require_pkce: true #false 
-        pkce_challenge_method: 'S256' #plain
+        #require_pkce: true #false >> not supported  as per official document 
+        #pkce_challenge_method: 'S256' #plain >> not supported  as per official document 
         redirect_uris:
-          - 'https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/gitea/user/oauth2/authelia/callback'
+           - 'https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/gitea/user/oauth2/authelia/callback'
         scopes:
           - 'openid'
           - 'profile'
