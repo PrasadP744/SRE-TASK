@@ -5,21 +5,21 @@ Stacks :
 ## Terraform 
 Docker >>
 includes
-🔴 Redis
+                 🔴 Redis
 🔧 Gitea
-📊 Grafana
+                📊 Grafana
 📝 Loki
-🌐 Nginx
+                🌐 Nginx
 📈 Prometheus
-📋 Node Exporter
+                📋 Node Exporter
 📄 Promtail
 
 
 
-THIS WAS FUN :))
+                                                         THIS WAS FUN :))
 ##changing the image version and  other configurations may brake the OIDC auth and also the cluster uptime.##
 
-This Repo 
+                                              This Repo 
 Adds Terraform with  ec2 provision and docker installation  &&
  Gitea,Grafana ,NGINX-proxy with-SSO-using-Authelia
 
