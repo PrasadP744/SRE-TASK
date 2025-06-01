@@ -1,5 +1,5 @@
 
-##  
+##  Some basic commands and setup procedures are shadowed  here   like terraform init and appy and all assuming that you already know basic to  more than intermediate knowledge about prerequisites. 
 
  ## Stacks :
 
@@ -44,7 +44,7 @@ This setup provides a solid foundation for production use but requires additiona
 ### 🔑 **Configuration Security**
 - **Exposed Secrets**: All configuration hashes and secrets are visible for educational purposes and better understanding and cloning this setup 
   - **Required for Production**: 
-    - Regenerate all passwords, API keys, and secret hashes
+    - Regenerate all passwords,and secret hashes
     - Use environment variables or secret management systems
     - Implement proper secret rotation policies
     - Enable audit logging for secret access
@@ -115,7 +115,8 @@ Feel free to use this as a foundation for your own infrastructure projects!
 📊 Grafana: https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/grafana   ##admin/admin123
 🔐 Authelia: https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/authelia/  
 ```
-
+- ##chalenges  No  serious issues were encountered  only minor issues were there and solved it .
+ in example image compatibility -bugs  for some image versions and official documentation is incomplete and not accurat
 
 ## Infrastructure Setup Screenshots
 ![Infrastructure](https://raw.githubusercontent.com/PrasadP744/sre-task/main/images/Infrastructure.png)
