@@ -32,7 +32,7 @@ if [ ! -f ./ssl/server.crt ]; then
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -keyout ./ssl/server.key \
         -out ./ssl/server.crt \
-        -subj "/C=IN/ST=Karnataka/L=Karwar/O=SRE/CN=ec2-3-108-55-55.ap-south-1.compute.amazonaws.com"
+        -subj "/C=IN/ST=<your state here>/L=<yourlocation here>/O=SRE/CN=ec2-52.66.251.211.ap-south-1.compute.amazonaws.com"
 fi
 
 # Check if Docker and Docker Compose are installed
@@ -65,10 +65,10 @@ docker-compose ps
 
 # Show service URLs
 echo "🌐 Services are available at:"
-echo "  - Authelia (SSO): http://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/authelia/"
-echo "  - Gitea: http://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/gitea/"
-echo "  - Grafana: http://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/grafana/"
-echo "  - Prometheus: http://ec2-3-108-55-55.ap-south-1.compute.amazonaws.com/prometheus/"
+echo "  - Authelia (SSO): http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/authelia/"
+echo "  - Gitea: http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/gitea/"
+echo "  - Grafana: http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/grafana/"
+echo "  - Prometheus: http://ec2-52.66.251.211.ap-south-1.compute.amazonaws.com/prometheus/"
 
 echo ""
 echo "🔑 Default credentials:"
