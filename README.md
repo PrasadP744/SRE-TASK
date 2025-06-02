@@ -65,7 +65,33 @@ clients:
 ```
 
 
-<pre lang="yaml"><code>```yaml clients: - client_id: 'gitea' client_name: 'Gitea' public: true # Public client (no client_secret) authorization_policy: 'one_factor' redirect_uris: - 'https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/gitea/user/oauth2/authelia/callback' scopes: - 'openid' - 'profile' - 'groups' - 'email' userinfo_signing_algorithm: none response_types: - 'code' grant_types: - 'authorization_code' response_modes: - 'form_post' - 'query' - 'fragment' token_endpoint_auth_method: 'none' # Required for public clients ``` </code></pre>
+
+
+```
+clients:
+  - client_id: 'gitea'
+    client_name: 'Gitea'
+    # Remove client_secret for public client
+    public: true                              # Change to PUBLIC client
+    authorization_policy: 'one_factor'
+    redirect_uris:
+      - 'https://ec2-52-66-251-211.ap-south-1.compute.amazonaws.com/gitea/user/oauth2/authelia/callback'
+    scopes:
+      - 'openid'
+      - 'profile'
+      - 'groups'
+      - 'email'
+    userinfo_signing_algorithm: none
+    response_types:
+      - 'code'
+    grant_types:
+      - 'authorization_code'
+    response_modes:
+      - 'form_post'
+      - 'query'
+      - 'fragment'
+    token_endpoint_auth_method: 'none'        # Change to 'none' for public clients 
+``` 
 
 
 
