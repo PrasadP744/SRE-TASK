@@ -67,7 +67,7 @@ clients:
 
 
 
-```
+```yaml
 clients:
   - client_id: 'gitea'
     client_name: 'Gitea'
@@ -90,8 +90,8 @@ clients:
       - 'form_post'
       - 'query'
       - 'fragment'
-    token_endpoint_auth_method: 'none'        # Change to 'none' for public clients 
-``` 
+    token_endpoint_auth_method: 'none'        # Change to 'none' for public clients
+```
 
 
 
