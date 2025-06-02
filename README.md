@@ -63,6 +63,7 @@ clients:
   - client_id: 'gitea'
     require_pkce: false  # Disabled due to Gitea limitation
 ```
+ **PKCE challenge method is  available for public_clients only ..**
 
 **Issue**: Gitea currently does not support PKCE (Proof Key for Code Exchange) when acting as an OAuth2 client.
 
